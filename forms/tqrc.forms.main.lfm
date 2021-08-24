@@ -10,7 +10,9 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 705
   OnCreate = FormCreate
   OnResize = FormResize
+  LCLVersion = '2.0.12.0'
   object psMain: TPairSplitter
+    Cursor = crDefault
     Left = 0
     Height = 500
     Top = 0
@@ -34,6 +36,7 @@ object frmMain: TfrmMain
         Align = alTop
         Alignment = taCenter
         Caption = 'LazBarcode'
+        ParentColor = False
       end
       object panLazBarcode: TPanel
         Left = 0
@@ -50,6 +53,8 @@ object frmMain: TfrmMain
           Top = 8
           Width = 200
           StrictSize = True
+          Text = 'TBarcodeQR'
+          ECCLevel = eBarcodeQR_ECCLevel_L
         end
         object btnLazBarcodeGenerate: TButton
           Left = 216
@@ -114,6 +119,7 @@ object frmMain: TfrmMain
         Align = alTop
         Alignment = taCenter
         Caption = 'QRCodeGen'
+        ParentColor = False
       end
       object panQRCodeGen: TPanel
         Left = 0

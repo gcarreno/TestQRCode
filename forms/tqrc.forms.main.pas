@@ -84,39 +84,41 @@ begin
 end;
 
 procedure TfrmMain.btnQRCodeGenGenerateClick(Sender: TObject);
-{var
+var
   QRCode: IQrCode;
-  QRCodeBMP: TQRCodeGenLibBitmap;}
+  QRCodeBMP: TQRCodeGenLibBitmap;
 begin
-{  QRCode:= TQrCode.EncodeText(
+  QRCode:= TQrCode.EncodeText(
     memQRCodeGen.Text,
     TQrCode.TEcc.eccLow,
     TEncoding.UTF8
   );
-  QRCodeBMP:= QRCode.ToBitmapImage(200,4);
+
+  // The Scale argiment is still a bit magical for me so please experiment
+  QRCodeBMP:= QRCode.ToBitmapImage(7,2);
 
   //  I'm being lazy here and using an intermidiate file.
   //  A SaveToStream and LoadFrom Stream using a TMemoryStream would be better
   //  but the QRCode part needs a ImageWriter type that I don't know about
   QRCodeBMP.SaveToFile('temp_file.bmp');
   imgQRCodeGen.Picture.LoadFromFile('temp_file.bmp');
-  DeleteFile('temp_file.bmp');}
-  ShowMessage('Not implemented yet!'#13#10'Having issues with the code from example');
+  DeleteFile('temp_file.bmp');
+  QRCodeBMP.Free;
 end;
 
 procedure TfrmMain.btnQRCodeGenSaveClick(Sender: TObject);
-{var
+var
   QRCode: IQrCode;
-  QRCodeBMP: TQRCodeGenLibBitmap;}
+  QRCodeBMP: TQRCodeGenLibBitmap;
 begin
-{  QRCode:= TQrCode.EncodeText(
+  QRCode:= TQrCode.EncodeText(
     memQRCodeGen.Text,
     TQrCode.TEcc.eccLow,
     TEncoding.UTF8
   );
-  QRCodeBMP:= QRCode.ToBitmapImage(200,4);
-  QRCodeBMP.SaveToFile('QRCodeGen.bmp');}
-  ShowMessage('Not implemented yet!'#13#10'Having issues with the code from example');
+  // The Scale argiment is still a bit magical for me so please experiment
+  QRCodeBMP:= QRCode.ToBitmapImage(7,2);
+  QRCodeBMP.SaveToFile('QRCodeGen.bmp');
 end;
 
 procedure TfrmMain.btnLazBarcodeClearClick(Sender: TObject);

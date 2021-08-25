@@ -6,12 +6,16 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, PairSplitter, StdCtrls,
-  ExtCtrls, ubarcodes;
+  ExtCtrls, FPImage, ubarcodes;
 
 type
+{ TMyGifImage }
+  TMyGifImage = class(TGifImage)
+  protected
+    class function GetWriterClass: TFPCustomImageWriterClass; override;
+  end;
 
-  { TfrmMain }
-
+{ TfrmMain }
   TfrmMain = class(TForm)
     bqrLazBarcode: TBarcodeQR;
     btnQRCodeGenSavePNG: TButton;
@@ -25,6 +29,8 @@ type
     btnLazBarcodeSaveJPG: TButton;
     btnLazBarcodeSavePNG: TButton;
     btnQRCodeGenSaveSVG: TButton;
+    btnLazBarcodeSaveGIF: TButton;
+    btnQRCodeGenSaveGIF: TButton;
     imgQRCodeGen: TImage;
     lblQRCodeGen: TLabel;
     lblLazBarcode: TLabel;
@@ -38,11 +44,13 @@ type
     procedure btnLazBarcodeClearClick(Sender: TObject);
     procedure btnLazBarcodeGenerateClick(Sender: TObject);
     procedure btnLazBarcodeSaveBMPClick(Sender: TObject);
+    procedure btnLazBarcodeSaveGIFClick(Sender: TObject);
     procedure btnLazBarcodeSaveJPGClick(Sender: TObject);
     procedure btnLazBarcodeSavePNGClick(Sender: TObject);
     procedure btnQRCodeGenClearClick(Sender: TObject);
     procedure btnQRCodeGenGenerateClick(Sender: TObject);
     procedure btnQRCodeGenSaveBMPClick(Sender: TObject);
+    procedure btnQRCodeGenSaveGIFClick(Sender: TObject);
     procedure btnQRCodeGenSaveJPGClick(Sender: TObject);
     procedure btnQRCodeGenSavePNGClick(Sender: TObject);
     procedure btnQRCodeGenSaveSVGClick(Sender: TObject);
@@ -65,9 +73,17 @@ uses
   QlpQRCodeGenLibTypes,
   FPWriteBMP,
   FPWriteJPEG,
-  FPWritePNG;
+  FPWritePNG,
+  FPWriteGIF;
 
 {$R *.lfm}
+
+{ TMyGifImage }
+
+class function TMyGifImage.GetWriterClass: TFPCustomImageWriterClass;
+begin
+  Result:= TFPWriterGIF;
+end;
 
 { TfrmMain }
 
@@ -84,6 +100,11 @@ end;
 procedure TfrmMain.btnLazBarcodeSaveBMPClick(Sender: TObject);
 begin
   bqrLazBarcode.SaveToFile('LazBarcode.bmp');
+end;
+
+procedure TfrmMain.btnLazBarcodeSaveGIFClick(Sender: TObject);
+begin
+  bqrLazBarcode.SaveToFile('LazBarcode.gif', TMyGifImage);
 end;
 
 procedure TfrmMain.btnLazBarcodeSaveJPGClick(Sender: TObject);
@@ -146,6 +167,34 @@ begin
   QRCodeBMP:= QRCode.ToBitmapImage(7,2);
   QRCodeBMP.SaveToFile('QRCodeGen.bmp');
   QRCodeBMP.Free;
+end;
+
+procedure TfrmMain.btnQRCodeGenSaveGIFClick(Sender: TObject);
+var
+  QRCode: IQrCode;
+  QRCodeBMP: TQRCodeGenLibBitmap;
+  iwQRCode: TFPWriterGIF;
+  fsQRCode: TFileStream;
+begin
+  QRCode:= TQrCode.EncodeText(
+    memQRCodeGen.Text,
+    TQrCode.TEcc.eccLow,
+    TEncoding.UTF8
+  );
+  // The Scale argument is still a bit magical for me so please experiment
+  QRCodeBMP:= QRCode.ToBitmapImage(7,2);
+  fsQRCode:= TFileStream.Create('QRCodeGen.gif', fmCreate);
+  try
+    iwQRCode:= TFPWriterGIF.Create;
+    try
+      QRCodeBMP.SaveToStream(fsQRCode, iwQRCode);
+      QRCodeBMP.Free;
+    finally
+      iwQRCode.Free;
+    end;
+  finally
+    fsQRCode.Free;
+  end;
 end;
 
 procedure TfrmMain.btnQRCodeGenSaveJPGClick(Sender: TObject);
@@ -228,5 +277,7 @@ begin
   bqrLazBarcode.Text:= EmptyStr;
 end;
 
+initialization
+  TPicture.RegisterFileFormat('.gif', 'gif', TMyGifImage);
 end.
 

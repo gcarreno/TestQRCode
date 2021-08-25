@@ -39,11 +39,11 @@ object frmMain: TfrmMain
       end
       object panLazBarcode: TPanel
         Left = 0
-        Height = 215
+        Height = 233
         Top = 15
         Width = 350
         Align = alTop
-        ClientHeight = 215
+        ClientHeight = 233
         ClientWidth = 350
         TabOrder = 1
         object bqrLazBarcode: TBarcodeQR
@@ -88,10 +88,21 @@ object frmMain: TfrmMain
           OnClick = btnLazBarcodeSaveBMPClick
           TabOrder = 2
         end
-        object btnLazBarcodeSaveJPG: TButton
+        object btnLazBarcodeSaveGIF: TButton
           Left = 216
           Height = 33
           Top = 104
+          Width = 120
+          AutoSize = True
+          Caption = 'Save To GIF'
+          Constraints.MinWidth = 120
+          OnClick = btnLazBarcodeSaveGIFClick
+          TabOrder = 5
+        end
+        object btnLazBarcodeSaveJPG: TButton
+          Left = 216
+          Height = 33
+          Top = 136
           Width = 120
           AutoSize = True
           Caption = 'Save To JPG'
@@ -102,7 +113,7 @@ object frmMain: TfrmMain
         object btnLazBarcodeSavePNG: TButton
           Left = 216
           Height = 33
-          Top = 136
+          Top = 168
           Width = 120
           AutoSize = True
           Caption = 'Save to PNG'
@@ -113,8 +124,8 @@ object frmMain: TfrmMain
       end
       object memLazBarcode: TMemo
         Left = 0
-        Height = 270
-        Top = 230
+        Height = 252
+        Top = 248
         Width = 350
         Align = alClient
         Lines.Strings = (
@@ -144,11 +155,11 @@ object frmMain: TfrmMain
       end
       object panQRCodeGen: TPanel
         Left = 0
-        Height = 215
+        Height = 233
         Top = 15
         Width = 350
         Align = alTop
-        ClientHeight = 215
+        ClientHeight = 233
         ClientWidth = 350
         TabOrder = 0
         object imgQRCodeGen: TImage
@@ -190,10 +201,21 @@ object frmMain: TfrmMain
           OnClick = btnQRCodeGenSaveBMPClick
           TabOrder = 2
         end
-        object btnQRCodeGenSaveJPG: TButton
+        object btnQRCodeGenSaveGIF: TButton
           Left = 216
           Height = 33
           Top = 104
+          Width = 120
+          AutoSize = True
+          Caption = 'Save To GIF'
+          Constraints.MinWidth = 120
+          OnClick = btnQRCodeGenSaveGIFClick
+          TabOrder = 6
+        end
+        object btnQRCodeGenSaveJPG: TButton
+          Left = 216
+          Height = 33
+          Top = 136
           Width = 120
           AutoSize = True
           Caption = 'Save To JPG'
@@ -204,7 +226,7 @@ object frmMain: TfrmMain
         object btnQRCodeGenSavePNG: TButton
           Left = 216
           Height = 33
-          Top = 136
+          Top = 168
           Width = 120
           AutoSize = True
           Caption = 'Save to PNG'
@@ -215,7 +237,7 @@ object frmMain: TfrmMain
         object btnQRCodeGenSaveSVG: TButton
           Left = 216
           Height = 33
-          Top = 168
+          Top = 200
           Width = 120
           AutoSize = True
           Caption = 'Save to SVG'
@@ -226,8 +248,8 @@ object frmMain: TfrmMain
       end
       object memQRCodeGen: TMemo
         Left = 0
-        Height = 270
-        Top = 230
+        Height = 252
+        Top = 248
         Width = 350
         Align = alClient
         Lines.Strings = (

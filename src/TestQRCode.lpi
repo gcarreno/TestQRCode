@@ -20,12 +20,12 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="bin/TestQRCode"/>
+            <Filename Value="../bin/TestQRCode"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
             <OtherUnitFiles Value="third-party;forms"/>
-            <UnitOutputDirectory Value="bin/lib/$(TargetCPU)-$(TargetOS)"/>
+            <UnitOutputDirectory Value="../bin/lib/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>

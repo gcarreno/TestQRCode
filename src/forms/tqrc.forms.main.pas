@@ -52,6 +52,7 @@ type
 { TfrmMain }
   TfrmMain = class(TForm)
     bqrLazBarcode: TBarcodeQR;
+    btnLazBarcodeCopyToClipboard: TButton;
     btnQRCodeGenSavePNG: TButton;
     btnQRCodeGenSaveJPG: TButton;
     btnQRCodeGenSaveBMP: TButton;
@@ -65,6 +66,7 @@ type
     btnQRCodeGenSaveSVG: TButton;
     btnLazBarcodeSaveGIF: TButton;
     btnQRCodeGenSaveGIF: TButton;
+    btnQRCodeGenCopyToClipboard: TButton;
     imgQRCodeGen: TImage;
     lblQRCodeGen: TLabel;
     lblLazBarcode: TLabel;
@@ -76,18 +78,22 @@ type
     pssLazBarcode: TPairSplitterSide;
     pssQRCodeGen: TPairSplitterSide;
     procedure btnLazBarcodeClearClick(Sender: TObject);
+    procedure btnLazBarcodeCopyToClipboardClick(Sender: TObject);
     procedure btnLazBarcodeGenerateClick(Sender: TObject);
     procedure btnLazBarcodeSaveBMPClick(Sender: TObject);
     procedure btnLazBarcodeSaveGIFClick(Sender: TObject);
     procedure btnLazBarcodeSaveJPGClick(Sender: TObject);
     procedure btnLazBarcodeSavePNGClick(Sender: TObject);
+
     procedure btnQRCodeGenClearClick(Sender: TObject);
+    procedure btnQRCodeGenCopyToClipboardClick(Sender: TObject);
     procedure btnQRCodeGenGenerateClick(Sender: TObject);
     procedure btnQRCodeGenSaveBMPClick(Sender: TObject);
     procedure btnQRCodeGenSaveGIFClick(Sender: TObject);
     procedure btnQRCodeGenSaveJPGClick(Sender: TObject);
     procedure btnQRCodeGenSavePNGClick(Sender: TObject);
     procedure btnQRCodeGenSaveSVGClick(Sender: TObject);
+
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
   private
@@ -109,6 +115,7 @@ uses
 , FPWriteJPEG
 , FPWritePNG
 , FPWriteGIF
+, Clipbrd
 ;
 
 {$R *.lfm}
@@ -135,26 +142,36 @@ end;
 procedure TfrmMain.btnLazBarcodeSaveBMPClick(Sender: TObject);
 begin
   bqrLazBarcode.SaveToFile('LazBarcode.bmp');
+  ShowMessage('Bitmap file "LazBarcode.bmp" saved');
 end;
 
 procedure TfrmMain.btnLazBarcodeSaveGIFClick(Sender: TObject);
 begin
   bqrLazBarcode.SaveToFile('LazBarcode.gif', TMyGifImage);
+  ShowMessage('Bitmap file "LazBarcode.gif" saved');
 end;
 
 procedure TfrmMain.btnLazBarcodeSaveJPGClick(Sender: TObject);
 begin
   bqrLazBarcode.SaveToFile('LazBarcode.jpg', TJPEGImage);
+  ShowMessage('Bitmap file "LazBarcode.jpg" saved');
 end;
 
 procedure TfrmMain.btnLazBarcodeSavePNGClick(Sender: TObject);
 begin
   bqrLazBarcode.SaveToFile('LazBarcode.png', TPortableNetworkGraphic);
+  ShowMessage('Bitmap file "LazBarcode.png" saved');
 end;
 
-procedure TfrmMain.btnQRCodeGenClearClick(Sender: TObject);
+procedure TfrmMain.btnLazBarcodeClearClick(Sender: TObject);
 begin
-  imgQRCodeGen.Picture.Clear;
+  bqrLazBarcode.Text:= EmptyStr;
+end;
+
+procedure TfrmMain.btnLazBarcodeCopyToClipboardClick(Sender: TObject);
+begin
+  bqrLazBarcode.CopyToClipboard;
+  ShowMessage('Image copyed to clipboard');
 end;
 
 procedure TfrmMain.btnQRCodeGenGenerateClick(Sender: TObject);
@@ -302,9 +319,49 @@ begin
   QRCode.ToSvgFile(2, 'QRCodeGen.svg');
 end;
 
-procedure TfrmMain.btnLazBarcodeClearClick(Sender: TObject);
+procedure TfrmMain.btnQRCodeGenClearClick(Sender: TObject);
 begin
-  bqrLazBarcode.Text:= EmptyStr;
+  imgQRCodeGen.Picture.Clear;
+end;
+
+procedure TfrmMain.btnQRCodeGenCopyToClipboardClick(Sender: TObject);
+var
+  QRCode: IQrCode;
+  QRCodeBMP: TQRCodeGenLibBitmap;
+  iwQRCode: TFPWriterBMP;
+  msQRCode: TMemoryStream;
+  bmp: TBitmap;
+begin
+  QRCode:= TQrCode.EncodeText(
+    memQRCodeGen.Text,
+    TQrCode.TEcc.eccLow,
+    TEncoding.UTF8
+  );
+
+  // The Scale argument is still a bit magical for me so please experiment
+  QRCodeBMP:= QRCode.ToBitmapImage(7,2);
+  msQRCode:= TMemoryStream.Create;
+  try
+    iwQRCode:= TFPWriterBMP.Create;
+    try
+      QRCodeBMP.SaveToStream(msQRCode, iwQRCode);
+      QRCodeBMP.Free;
+      msQRCode.Position:= 0;
+      bmp:= TBitmap.Create;
+      try
+        //imgQRCodeGen.Picture.Bitmap.LoadFromStream(msQRCode);
+        bmp.LoadFromStream(msQRCode);
+        Clipboard.Assign(bmp);
+        ShowMessage('Image copyed to clipboard');
+      finally
+        bmp.Free;
+      end;
+    finally
+      iwQRCode.Free;
+    end;
+  finally
+    msQRCode.Free;
+  end;
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);

@@ -10,7 +10,6 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 705
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '2.0.12.0'
   object psMain: TPairSplitter
     Cursor = crDefault
     Left = 0
@@ -40,11 +39,11 @@ object frmMain: TfrmMain
       end
       object panLazBarcode: TPanel
         Left = 0
-        Height = 233
+        Height = 273
         Top = 15
         Width = 350
         Align = alTop
-        ClientHeight = 233
+        ClientHeight = 273
         ClientWidth = 350
         TabOrder = 1
         object bqrLazBarcode: TBarcodeQR
@@ -122,11 +121,22 @@ object frmMain: TfrmMain
           OnClick = btnLazBarcodeSavePNGClick
           TabOrder = 4
         end
+        object btnLazBarcodeCopyToClipboard: TButton
+          Left = 216
+          Height = 33
+          Top = 200
+          Width = 120
+          AutoSize = True
+          Caption = 'Clipboard'
+          Constraints.MinWidth = 120
+          OnClick = btnLazBarcodeCopyToClipboardClick
+          TabOrder = 6
+        end
       end
       object memLazBarcode: TMemo
         Left = 0
-        Height = 252
-        Top = 248
+        Height = 212
+        Top = 288
         Width = 350
         Align = alClient
         Lines.Strings = (
@@ -156,11 +166,11 @@ object frmMain: TfrmMain
       end
       object panQRCodeGen: TPanel
         Left = 0
-        Height = 233
+        Height = 273
         Top = 15
         Width = 350
         Align = alTop
-        ClientHeight = 233
+        ClientHeight = 273
         ClientWidth = 350
         TabOrder = 0
         object imgQRCodeGen: TImage
@@ -246,11 +256,22 @@ object frmMain: TfrmMain
           OnClick = btnQRCodeGenSaveSVGClick
           TabOrder = 5
         end
+        object btnQRCodeGenCopyToClipboard: TButton
+          Left = 216
+          Height = 33
+          Top = 232
+          Width = 120
+          AutoSize = True
+          Caption = 'Clipboard'
+          Constraints.MinWidth = 120
+          OnClick = btnQRCodeGenCopyToClipboardClick
+          TabOrder = 7
+        end
       end
       object memQRCodeGen: TMemo
         Left = 0
-        Height = 252
-        Top = 248
+        Height = 212
+        Top = 288
         Width = 350
         Align = alClient
         Lines.Strings = (

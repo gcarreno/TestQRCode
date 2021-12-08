@@ -20,7 +20,7 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="../bin/TestQRCode"/>
+            <Filename Value="../bin/$(TargetCPU)/$(TargetOS)/TestQRCode"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -60,7 +60,7 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="../bin/TestQRCode"/>
+            <Filename Value="../bin/$(TargetCPU)/$(TargetOS)/TestQRCode"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -124,7 +124,7 @@
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="../bin/TestQRCode"/>
+      <Filename Value="../bin/$(TargetCPU)/$(TargetOS)/TestQRCode"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

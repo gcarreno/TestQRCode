@@ -105,6 +105,9 @@ type
 var
   frmMain: TfrmMain;
 
+const
+  cVersion = '0.6';
+
 implementation
 
 uses
@@ -367,6 +370,7 @@ end;
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   bqrLazBarcode.Text:= EmptyStr;
+  Caption:= Caption + ' v' + cVersion;
 end;
 
 initialization

@@ -29,8 +29,18 @@ unit TQRC.Forms.Main;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, PairSplitter, StdCtrls,
-  ExtCtrls, FPImage, ubarcodes;
+  Classes
+, SysUtils
+, Forms
+, Controls
+, Graphics
+, Dialogs
+, PairSplitter
+, StdCtrls
+, ExtCtrls
+, FPImage
+, ubarcodes
+;
 
 type
 { TMyGifImage }
@@ -92,13 +102,14 @@ var
 implementation
 
 uses
-  QlpIQrCode,
-  QlpQrCode,
-  QlpQRCodeGenLibTypes,
-  FPWriteBMP,
-  FPWriteJPEG,
-  FPWritePNG,
-  FPWriteGIF;
+  QlpIQrCode
+, QlpQrCode
+, QlpQRCodeGenLibTypes
+, FPWriteBMP
+, FPWriteJPEG
+, FPWritePNG
+, FPWriteGIF
+;
 
 {$R *.lfm}
 
